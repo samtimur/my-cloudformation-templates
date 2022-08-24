@@ -11,8 +11,9 @@ podTemplate(containers: [
             container('python') {
                 stage('Build a project') {
                     sh '''
-                    echo "Go Build"
+                    echo "Install cfn-policy-validator"
                     python3 --version
+                    pip3 install cfn-policy-validator
                     '''
                 }
             }
