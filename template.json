@@ -1,0 +1,90 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "This template creates an SQS queue with an SQS queue policy attached and an IAM role that can access the queue. You will be billed for the AWS resources used if you create a stack from this template.",  
+    "Parameters": {
+        "QueueName": {
+            "Type": "String",
+            "Description": "The name of the queue to grant read permissions to."
+        },
+        "RoleName": {
+            "Type": "String",
+            "Description": "The name of the role with access to the SQS Queue."
+        }
+    },
+    "Resources": {
+        "MyQueue": {
+            "Type": "AWS::SQS::Queue",
+            "Properties": {
+                "QueueName": {"Ref": "QueueName"}
+            }
+        },
+        "MyQueuePolicy": {
+            "Type": "AWS::SQS::QueuePolicy",
+            "Properties": {
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Action": "sqs:*",
+                            "Effect": "Allow",
+                            "Resource": {
+                                "Fn::GetAtt": [
+                                    "MyQueue",
+                                    "Arn"
+                                ]
+                            },
+                            "Principal": {
+                                "AWS": [
+                                    {"Ref": "AWS::AccountId"}
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "Queues": [
+                    {
+                        "Ref": "MyQueue"
+                    }
+                ]
+            }
+        },
+        "MyRoleWithBadAction": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "RoleName": {"Ref": "RoleName"},
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "AWS": {
+                                    "Ref": "AWS::AccountId"
+                                }
+                            },
+                            "Action": "sts:AssumeRole"
+                        }
+                    ]
+                },
+                "Policies": [
+                    {
+                        "PolicyName": "policy-with-bad-action",
+                        "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                                {
+                                    "Effect": "Allow",
+                                    "Action": "sqs:ReceiveMessage",
+                                    "Resource": {
+                                        "Fn::Sub": "arn:aws:sqs:${AWS::Region}:${AWS::AccountId}:${QueueName}"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+    }
+    

@@ -1,0 +1,7 @@
+{
+    "Parameters" : {
+      "QueueName" : "MyQueue",
+      "RoleName": "MyRole"
+    }
+  }
+  
