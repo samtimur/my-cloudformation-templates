@@ -3,8 +3,8 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh 'apt update && apt install -y python3 && apt install -y python3-pip'
-        sh 'pip install -r requirements.txt'
+        sh 'python3 --version'
+        sh 'pip3 install -r requirements.txt'
       }
     }
     stage('test') {
