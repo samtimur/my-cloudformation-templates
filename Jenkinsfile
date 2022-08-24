@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh 'python3 --version'
+        sh 'apk add python3 && python3 -m ensurepip && pip3 install --upgrade pip setuptools'
         sh 'pip3 install -r requirements.txt'
       }
     }
