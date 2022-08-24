@@ -1,16 +1,18 @@
 podTemplate(containers: [
     containerTemplate(
-        name: 'jnlp', 
-        image: 'jenkins/inbound-agent:latest'
-        )
+        name: 'python', 
+        image: 'python:latest', 
+        command: 'sleep', 
+        args: '30d')
   ]) {
 
     node(POD_LABEL) {
-        stage('Get a Maven project') {
-            container('jnlp') {
-                stage('Shell Execution') {
+        stage('Get a Python Project') {
+            container('python') {
+                stage('Build a project') {
                     sh '''
-                    echo "Hello! I am executing shell"
+                    echo "Go Build"
+                    python3 --version
                     '''
                 }
             }
