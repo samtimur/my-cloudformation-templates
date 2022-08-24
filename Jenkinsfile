@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh 'yum install python3 && python3 -m ensurepip && pip3 install --upgrade pip setuptools'
+        sh 'python3 --version'
         sh 'pip3 install -r requirements.txt'
       }
     }
