@@ -42,7 +42,7 @@ podTemplate(containers: [
                 stage('Deploy stack') {
                     sh '''
                     echo "Create change-set"
-                    aws cloudformation create-change-set --stack-name my-cloudformation-templates-stack-jenkins --change-set-name my-cloudformation-templates-change-set --template-body file://template.json --parameters file://parameters.json
+                    aws cloudformation create-change-set --stack-name my-cloudformation-templates-stack-jenkins --change-set-name my-cloudformation-templates-change-set --template-body file://template.json --parameters file://parameters.json --change-set-type CREATE
                     '''
                 }
 
