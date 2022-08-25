@@ -1,7 +1,7 @@
 [
     {
         "ParameterKey":"QueueName",
-        "ParameterValue":"MyQueue-Jenkins"
+        "ParameterValue":"MyQueue-Jenkins-2"
     },
     {
         "ParameterKey":"RoleName",
