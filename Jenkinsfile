@@ -11,10 +11,9 @@ podTemplate(containers: [
             container('python') {
                 stage('Install toolkit') {
                     sh '''
-                    echo "Install cfn-policy-validator and cfn-lint"
+                    echo "Install requirements"
                     python3 --version
-                    pip3 install cfn-policy-validator
-                    pip3 install cfn-lint
+                    pip3 install -r requirements.txt
                     '''
                 }
                 stage('cfn-lint') {
@@ -40,6 +39,14 @@ podTemplate(containers: [
                     aws --version
                     '''
                 }
+                stage('Deploy stack') {
+                    sh '''
+                    echo "Create change-set"
+                    aws cloudformation create-change-set --stack-name my-cloudformation-templates-stack-jenkins --change-set-name my-cloudformation-templates-change-set --template-body file://template.json --parameters file://parameters.json
+                    '''
+                }
+
+
             }
         }
     }
