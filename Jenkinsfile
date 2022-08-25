@@ -53,6 +53,7 @@ podTemplate(containers: [
                     sh '''
                     echo "Execute change-set"
                     aws cloudformation execute-change-set --stack-name my-cloudformation-templates-stack-jenkins --change-set-name my-cloudformation-templates-change-set
+                    aws cloudformation wait change-set-create-complete --stack-name my-cloudformation-templates-stack-jenkins --change-set-name my-cloudformation-templates-change-set
                     '''
                 }
             }
