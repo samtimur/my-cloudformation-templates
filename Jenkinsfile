@@ -14,7 +14,8 @@ podTemplate(containers: [
             container('python') {
                 stage('Install toolkit') {
                     sh '''
-                    echo "Install cfn-policy-validator"
+                    echo "Install cfn-policy-validator and cfn-lint"
+                    aws --version
                     python3 --version
                     pip3 install cfn-policy-validator
                     pip3 install cfn-lint
@@ -34,6 +35,8 @@ podTemplate(containers: [
                 }
             }
         }
+
+
 
     }
 }
