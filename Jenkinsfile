@@ -1,9 +1,6 @@
 podTemplate(containers: [
-    containerTemplate(
-        name: 'python', 
-        image: 'python:latest', 
-        command: 'sleep', 
-        args: '30d')
+    containerTemplate(name: 'python', image: 'python:latest', command: 'sleep', args: '30d')
+    containerTemplate(name: 'aws-cli', image: 'amazon/aws-cli:latest', tty: true)
   ]) {
 
     node(POD_LABEL) {
@@ -15,7 +12,6 @@ podTemplate(containers: [
                 stage('Install toolkit') {
                     sh '''
                     echo "Install cfn-policy-validator and cfn-lint"
-                    aws --version
                     python3 --version
                     pip3 install cfn-policy-validator
                     pip3 install cfn-lint
@@ -36,7 +32,15 @@ podTemplate(containers: [
             }
         }
 
-
-
+        stage('Deploy') {
+            container('aws-cli') {
+                stage('Install toolkit') {
+                    sh '''
+                    echo "Install aws-cli"
+                    aws --version
+                    '''
+                }
+            }
+        }
     }
 }
