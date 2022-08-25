@@ -7,6 +7,9 @@ podTemplate(containers: [
   ]) {
 
     node(POD_LABEL) {
+
+        checkout scm
+        
         stage('Validation') {
             container('python') {
                 stage('Install toolkit') {
