@@ -41,6 +41,7 @@ podTemplate(containers: [
                 }
                 stage('Create change set') {
                     sh '''
+                    set +e
                     echo "Create change-set"
                     RETURN_CODE=$(aws cloudformation describe-stacks --stack-name my-cloudformation-templates-stack-jenkins)
                     [ $RETURN_CODE -eq 0 ] && CHANGE_SET_TYPE=UPDATE || CHANGE_SET_TYPE=CREATE
