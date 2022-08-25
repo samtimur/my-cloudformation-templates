@@ -46,7 +46,7 @@ podTemplate(containers: [
                     CHANGE_SET_TYPE=UPDATE
                     aws cloudformation describe-stacks --stack-name my-cloudformation-templates-stack-jenkins || CHANGE_SET_TYPE=CREATE
                     aws cloudformation create-change-set --stack-name my-cloudformation-templates-stack-jenkins --change-set-name my-cloudformation-templates-change-set --template-body file://template.json --parameters file://parameters.json --capabilities CAPABILITY_NAMED_IAM --change-set-type $CHANGE_SET_TYPE
-                    if CHANGE_SET_TYPE=UPDATE then aws cloudformation wait change-set-create-complete --stack-name my-cloudformation-templates-stack-jenkins --change-set-name my-cloudformation-templates-change-set fi
+                    if ((CHANGE_SET_TYPE ==UPDATE)); then aws cloudformation wait change-set-create-complete --stack-name my-cloudformation-templates-stack-jenkins --change-set-name my-cloudformation-templates-change-set; fi
                     '''
                 }
                 stage('Execute change set') {
