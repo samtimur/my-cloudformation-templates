@@ -7,13 +7,19 @@ podTemplate(containers: [
   ]) {
 
     node(POD_LABEL) {
-        stage('Get a Python Project') {
+        stage('Validation') {
             container('python') {
-                stage('Build a project') {
+                stage('Install toolkit') {
                     sh '''
                     echo "Install cfn-policy-validator"
                     python3 --version
                     pip3 install cfn-policy-validator
+                    '''
+                }
+                stage('cfn-policy-validator') {
+                    sh '''
+                    echo "Run cfn-policy-validator"
+                    cfn-policy-validator validate --template-path template.json --region us-east-2 --template-configuration-file template-configuration.json
                     '''
                 }
             }
