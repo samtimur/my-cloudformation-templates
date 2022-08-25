@@ -74,7 +74,7 @@
                             "Statement": [
                                 {
                                     "Effect": "Allow",
-                                    "Action": "sqs:ReceiveMessage",
+                                    "Action": "sqs:ReceiveMessages",
                                     "Resource": {
                                         "Fn::Sub": "arn:aws:sqs:${AWS::Region}:${AWS::AccountId}:${QueueName}"
                                     }
