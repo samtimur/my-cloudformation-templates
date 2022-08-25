@@ -9,7 +9,7 @@ podTemplate(containers: [
     node(POD_LABEL) {
 
         checkout scm
-        
+
         stage('Validation') {
             container('python') {
                 stage('Install toolkit') {
@@ -17,6 +17,13 @@ podTemplate(containers: [
                     echo "Install cfn-policy-validator"
                     python3 --version
                     pip3 install cfn-policy-validator
+                    pip3 install cfn-lint
+                    '''
+                }
+                stage('cfn-lint') {
+                    sh '''
+                    echo "Run cfn-lint"
+                    cfn-lint template.json
                     '''
                 }
                 stage('cfn-policy-validator') {
