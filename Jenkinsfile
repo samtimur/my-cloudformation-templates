@@ -43,8 +43,8 @@ podTemplate(containers: [
                     sh '''
                     set +e
                     echo "Create change-set"
-                    RETURN_CODE=$(aws cloudformation describe-stacks --stack-name my-cloudformation-templates-stack-jenkins)
-                    [ $RETURN_CODE -eq 0 ] && CHANGE_SET_TYPE=UPDATE || CHANGE_SET_TYPE=CREATE
+                    CHANGE_SET_TYPE=UPDATE
+                    aws cloudformation describe-stacks --stack-name my-cloudformation-templates-stack-jenkins || CHANGE_SET_TYPE=CREATE
                     aws cloudformation create-change-set --stack-name my-cloudformation-templates-stack-jenkins --change-set-name my-cloudformation-templates-change-set --template-body file://template.json --parameters file://parameters.json --capabilities CAPABILITY_NAMED_IAM --change-set-type $CHANGE_SET_TYPE
                     '''
                 }
