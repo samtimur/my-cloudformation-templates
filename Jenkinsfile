@@ -1,5 +1,5 @@
 podTemplate(containers: [
-    containerTemplate(name: 'python', image: 'python:latest', command: 'sleep', args: '30d')
+    containerTemplate(name: 'python', image: 'python:latest', command: 'sleep', args: '30d'),
     containerTemplate(name: 'aws-cli', image: 'amazon/aws-cli:latest', ttyEnabled: true, command: 'cat')
   ]) {
 
