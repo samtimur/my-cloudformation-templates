@@ -13,8 +13,6 @@ podTemplate(containers: [
                 stage('Test s3') {
                     sh '''
                     aws s3 ls
-                    echo test > test.txt
-                    aws s3 cp test.txt s3://197831068840-jenkins-irsa/test.txt
                     '''
                 }
             }
