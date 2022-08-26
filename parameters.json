@@ -5,6 +5,6 @@
     },
     {
         "ParameterKey":"RoleName",
-        "ParameterValue":"MyRole-Jenkins-2"
+        "ParameterValue":"MyRole-Jenkins"
     }
 ]

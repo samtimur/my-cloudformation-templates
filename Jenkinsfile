@@ -1,11 +1,24 @@
 podTemplate(containers: [
     containerTemplate(name: 'python', image: 'python:latest', command: 'sleep', args: '30d'),
     containerTemplate(name: 'aws-cli', image: 'amazon/aws-cli:latest', ttyEnabled: true, command: 'cat')
-  ]) {
+  ],
+  serviceAccount: 'jenkins-service-account' ) {
 
     node(POD_LABEL) {
 
         checkout scm
+
+        stage('S3 Test') {
+            container('aws-cli') {
+                stage('Test s3') {
+                    sh '''
+                    aws s3 ls
+                    echo test > test.txt
+                    aws s3 cp test.txt s3://197831068840-jenkins-irsa/test.txt
+                    '''
+                }
+            }
+        }
 
         stage('Validation') {
             container('python') {
